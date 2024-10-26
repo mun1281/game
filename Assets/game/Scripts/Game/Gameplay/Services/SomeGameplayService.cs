@@ -6,6 +6,7 @@ namespace Assets.game.Scripts.Game.Gameplay.Services
 {
     public class SomeGameplayService : IDisposable
     {
+        // Сервис общего DI уровня.
         private readonly SomeCommonService _someCommonService;
 
         public SomeGameplayService(SomeCommonService someCommonService)

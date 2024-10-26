@@ -4,7 +4,7 @@ using BaCon;
 
 namespace Assets.game.Scripts.Game.Gameplay.Root
 {
-    public class GameplayRegistrations
+    public static class GameplayRegistrations
     {
         public static void Registar(DIContainer container, GameplayEnterParams gameplayEnterParams)
         {

@@ -13,8 +13,8 @@ namespace Assets.game.Scripts.Game.Gameplay.Root
 
         public Observable<GameplayExitParams> Run(DIContainer gameplayContainer, GameplayEnterParams enterParams)
         {
-            GameplayRegistrations.Registar(gameplayContainer, enterParams);
-            var gameplayViewModelsContainer = new DIContainer(gameplayContainer);
+            GameplayRegistrations.Registar(gameplayContainer, enterParams);// Регестрация сервиса SomeGameplayService.
+            var gameplayViewModelsContainer = new DIContainer(gameplayContainer);// Создание контейнера для View моделей (Может брать данные из: главного DI и DI сцены).
             GameplayViewModelsRegistrations.Register(gameplayViewModelsContainer);
             // Регестрация завершина. Теперь можно достовать из этих контейнеров.
 

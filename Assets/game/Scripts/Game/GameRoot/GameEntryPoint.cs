@@ -39,9 +39,9 @@ namespace game.Scripts
             var prefabUIRoot = Resources.Load<UIRootView>("UIRoot");
             _uiRoot = Object.Instantiate(prefabUIRoot);
             Object.DontDestroyOnLoad(_uiRoot.gameObject);
+            // Регистрация DI.
             _rootContainer.RegisterInstance(_uiRoot);
             _rootContainer.RegisterFactory(_ => new SomeCommonService()).AsSingle();
-            // Создание контейнера и подгрузка настроек игры.
         }
 
         private void RunGame()
@@ -82,7 +82,7 @@ namespace game.Scripts
 
             var sceneEntryPoint = Object.FindFirstObjectByType<GameplayEntryPoint>();// Поиск по типу.
 
-            // Контейнер
+            // Контейнер сцены.
             var gameplayContainer = _cachedSceneContainer = new DIContainer(_rootContainer);
 
             // Подписались на событие.
@@ -106,7 +106,7 @@ namespace game.Scripts
 
             var sceneEntryPoint = Object.FindFirstObjectByType<MainMenuEntryPoint>();// Поиск по типу.
 
-            // Контейнер
+            // Контейнер сцены.
             var mainMenuContainer = _cachedSceneContainer = new DIContainer(_rootContainer);
 
             sceneEntryPoint.Run(mainMenuContainer, enterParams).Subscribe(mainMenuExitParams =>

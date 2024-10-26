@@ -4,7 +4,7 @@ using BaCon;
 
 namespace Assets.game.Scripts.Game.MainMenu.Root
 {
-    public class MainMenuRegistrations
+    public static class MainMenuRegistrations
     {
         public static void Registar(DIContainer container, MainMenuEnterParams mainMenuEnterParams)
         {
