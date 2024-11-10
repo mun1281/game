@@ -1,6 +1,7 @@
 ﻿using Assets.game.Scripts.Game.Gameplay.Root;
 using Assets.game.Scripts.Game.Gameplay.Root.View;
 using Assets.game.Scripts.Game.MainMenu.Root.View;
+using Assets.game.Scripts.Game.MainMenu.Services;
 using BaCon;
 using game.Scripts;
 using R3;
@@ -18,10 +19,10 @@ namespace Assets.game.Scripts.Game.MainMenu.Root
             MainMenuRegistrations.Registar(mainMenuContainer, enterParams);
             var mainMenuViewModelsContainer = new DIContainer(mainMenuContainer);
             MainMenuViewModelsRegistrations.Register(mainMenuViewModelsContainer);
-            // Регестрация завершина. Теперь можно достовать из этих контейнеров.
 
             // Тест.
             mainMenuViewModelsContainer.Resolve<UIMainMenuRootViewModel>();
+            mainMenuContainer.Resolve<SomeMainMenuService>();
 
             var uiRoot = mainMenuContainer.Resolve<UIRootView>();
             var uiScene = Instantiate(_sceneUIRootPrefab);

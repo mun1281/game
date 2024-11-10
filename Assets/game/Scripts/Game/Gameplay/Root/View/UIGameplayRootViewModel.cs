@@ -1,13 +1,10 @@
-﻿using Assets.game.Scripts.Game.Gameplay.Services;
-
-namespace Assets.game.Scripts.Game.Gameplay.Root.View
+﻿namespace Assets.game.Scripts.Game.Gameplay.Root.View
 {
     public class UIGameplayRootViewModel
     {
-        private readonly SomeGameplayService _someGameplayService;
-        public UIGameplayRootViewModel(SomeGameplayService someGameplayService)
+        public UIGameplayRootViewModel()
         {
-            _someGameplayService = someGameplayService;
+            
         }
     }
 }
