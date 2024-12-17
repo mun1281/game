@@ -1,4 +1,6 @@
-﻿using Assets.game.Scripts.Game.State.Root;
+﻿using Assets.game.Scripts.Game.State.GameResources;
+using Assets.game.Scripts.Game.State.Maps;
+using Assets.game.Scripts.Game.State.Root;
 using Assets.game.Scripts.GameStateBuildings;
 using R3;
 using System;
@@ -93,9 +95,12 @@ namespace Assets.game.Scripts.Game.State
             // Состояние по умолчанию из настроек, мы делаем фейк.
             _gameStateOrigin = new GameState
             {
-                Buildings = new List<BuildingEntity>
+                Maps = new List<MapState>(),
+                Resources = new List<ResourceData>()
                 {
-
+                    new() { Amount = 0, ResourceType = ResourceType.SoftCurrency },
+                    new() { Amount = 0, ResourceType = ResourceType.HardCurrency },
+                    new() { Amount = 0, ResourceType = ResourceType.Wood }
                 }
             };
 

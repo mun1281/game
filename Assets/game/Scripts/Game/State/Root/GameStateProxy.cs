@@ -1,43 +1,74 @@
-﻿using Assets.game.Scripts.Game.State.Buildings;
-using Assets.game.Scripts.GameStateBuildings;
-using ObservableCollections;
+﻿using ObservableCollections;
 using System.Linq;
 using R3;
+using Assets.game.Scripts.Game.State.Maps;
+using Assets.game.Scripts.Game.State.GameResources;
 
 namespace Assets.game.Scripts.Game.State.Root
 {
     public class GameStateProxy
     {
         private readonly GameState _gameState;
+        public ReactiveProperty<int> CurrentMapId = new();
 
-        public ObservableList<BuildingEntityProxy> Buildings { get; } = new();
+        public ObservableList<Map> Maps { get; } = new();
+        public ObservableList<Resource> Resources { get; } = new();
 
         public GameStateProxy(GameState gameState)
         {
             _gameState = gameState;
 
+            InitMaps(gameState);
+            InitResources(gameState);
+
+            CurrentMapId.Subscribe(newValue => { gameState.CurrentMapId = newValue; });
+        }
+
+        public int CreateEntityId()
+        {// Индивидуальный ID объекта.
+            return _gameState.CreateEntityId();
+        }
+
+        private void InitMaps(GameState gameState)
+        {
             // Для каждого оригинального строения делаем прокси и ложем в него это строение, а после прокси кладем в Buildings лист.
-            gameState.Buildings.ForEach(buildingOrigin => Buildings.Add(new BuildingEntityProxy(buildingOrigin)));
+            gameState.Maps.ForEach(mapOrigin => Maps.Add(new Map(mapOrigin)));
 
             // Подписка на добовление.
-            Buildings.ObserveAdd().Subscribe(e =>
+            Maps.ObserveAdd().Subscribe(e =>
             {
-                var addedBuildingEntity = e.Value;
-                gameState.Buildings.Add(addedBuildingEntity.Origin);
+                var addedMap = e.Value;
+                gameState.Maps.Add(addedMap.Origin);
             });
 
             // Подписка на удаление.
-            Buildings.ObserveRemove().Subscribe(e =>
+            Maps.ObserveRemove().Subscribe(e =>
             {
-                var removedBuildingEntityProxy = e.Value;
-                var removedBuildingEntity = gameState.Buildings.FirstOrDefault(b => b.Id == removedBuildingEntityProxy.Id);
-                gameState.Buildings.Remove(removedBuildingEntity);
+                var removedMap = e.Value;
+                var removedMapState = gameState.Maps.FirstOrDefault(b => b.Id == removedMap.Id);
+                gameState.Maps.Remove(removedMapState);
             });
         }
 
-        public int GetEntityId()
-        {// Индивидуальный ID объекта.
-            return _gameState.GlobalEntityId++;
+        private void InitResources(GameState gameState)
+        {
+            // Для каждого оригинального строения делаем прокси и ложем в него это строение, а после прокси кладем в Buildings лист.
+            gameState.Resources.ForEach(resourceData => Resources.Add(new Resource(resourceData)));
+
+            // Подписка на добовление.
+            Resources.ObserveAdd().Subscribe(e =>
+            {
+                var addedResource = e.Value;
+                gameState.Resources.Add(addedResource.Origin);
+            });
+
+            // Подписка на удаление.
+            Resources.ObserveRemove().Subscribe(e =>
+            {
+                var removedResource = e.Value;
+                var removedResourceData = gameState.Resources.FirstOrDefault(b => b.ResourceType == removedResource.ResourceType);
+                gameState.Resources.Remove(removedResourceData);
+            });
         }
     }
 }

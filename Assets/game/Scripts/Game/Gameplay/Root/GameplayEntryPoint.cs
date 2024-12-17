@@ -1,12 +1,7 @@
-﻿using Assets.game.Scripts.Game.Gameplay.Commands;
-using Assets.game.Scripts.Game.Gameplay.Root.View;
-using Assets.game.Scripts.Game.Gameplay.Services;
+﻿using Assets.game.Scripts.Game.Gameplay.Root.View;
 using Assets.game.Scripts.Game.MainMenu.Root;
-using Assets.game.Scripts.Game.State;
-using Assets.game.Scripts.Game.State.cmd;
 using BaCon;
 using game.Scripts;
-using ObservableCollections;
 using R3;
 using UnityEngine;
 
@@ -22,27 +17,6 @@ namespace Assets.game.Scripts.Game.Gameplay.Root
             GameplayRegistrations.Registar(gameplayContainer, enterParams);// регестрируем команды, настройки и сервесы.
             var gameplayViewModelsContainer = new DIContainer(gameplayContainer);// Создание контейнера для View моделей (Может брать данные из: главного DI и DI сцены).
             GameplayViewModelsRegistrations.Register(gameplayViewModelsContainer);
-            
-
-            /// тест
-            var gameStateProvider = gameplayContainer.Resolve<IGameStateProvider>();
-            gameStateProvider.GameState.Buildings.ObserveAdd().Subscribe(e =>
-            {
-                var building = e.Value;
-                Debug.Log("Building placed. Type id: " +
-                    building.TypeId
-                    + " Id: " + building.Id
-                    + ", Position: " +
-                    building.Position.Value);
-            });
-            ///
-
-            // В будущем будем передовать этот сервис во вью а он будет реагировать что создать.
-            var buildingsService = gameplayContainer.Resolve<BuildingsService>();
-
-            buildingsService.PlaceBuilding("dummy", GetRandomPosition());
-            buildingsService.PlaceBuilding("dummy", GetRandomPosition());
-            buildingsService.PlaceBuilding("dummy", GetRandomPosition());
 
             // Тест.
             gameplayViewModelsContainer.Resolve<UIGameplayRootViewModel>();
@@ -58,7 +32,7 @@ namespace Assets.game.Scripts.Game.Gameplay.Root
             var exitSceneSignalSubj = new Subject<Unit>();
             uiScene.Bind(exitSceneSignalSubj);// Передаём его кнопке.
 
-            Debug.Log($"GAMEPLAY ENTRY POINT: save file name = {enterParams.SaveFileName}, level to load = {enterParams.LevelNumber}");
+            Debug.Log($"GAMEPLAY ENTRY POINT: level to load = {enterParams.MapId}");
 
             // Создаём объект параметров для выхода в главное меню, используя переданный Subject.
             var mainMenuEnterParams = new MainMenuEnterParams("Fatality");

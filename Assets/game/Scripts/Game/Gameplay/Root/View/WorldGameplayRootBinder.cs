@@ -13,8 +13,12 @@ namespace Assets.game.Scripts.Game.Gameplay.Root.View
 
         private readonly CompositeDisposable _disposables = new();
 
+        private WorldGameplayRootViewModel _viewModel;
+
         public void Bind(WorldGameplayRootViewModel viewModel)
         {
+            _viewModel = viewModel;
+
             foreach (var buildingViewModel in viewModel.AllBuildings)
             {
                 CreateBuilding(buildingViewModel);
@@ -32,7 +36,7 @@ namespace Assets.game.Scripts.Game.Gameplay.Root.View
 
         private void CreateBuilding(BuildingViewModel buildingViewModel)
         {
-            var buildingLevel = Random.Range(1, 4);
+            var buildingLevel = buildingViewModel.Level.CurrentValue;
             var buildingType = buildingViewModel.TypeId;
             var prefabBuildingLevelPath = $"Prefabs/Gameplay/Buildings/Building_{buildingType}_{buildingLevel}";
             var buildingPrefab = Resources.Load<BuildingBinder>(prefabBuildingLevelPath);// Префаб кэшируется в оперативную память.
@@ -49,6 +53,14 @@ namespace Assets.game.Scripts.Game.Gameplay.Root.View
             {
                 Destroy(buildingBinder.gameObject);
                 _createBuildingsMap.Remove(buildingViewModel.BuildingEntityId);
+            }
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                _viewModel.HandleTestInput();
             }
         }
     }

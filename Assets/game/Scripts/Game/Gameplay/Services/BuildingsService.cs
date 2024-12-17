@@ -18,7 +18,7 @@ namespace Assets.game.Scripts.Game.Gameplay.Services
         public readonly ObservableList<BuildingViewModel> _allBuildings = new();
         private readonly Dictionary<string, BuildingSettings> _buildingSettingsMap = new();
 
-        public IObservableCollection<BuildingViewModel> _AllBuildings => _allBuildings;//Хранит список вью моделей.
+        public IObservableCollection<BuildingViewModel> AllBuildings => _allBuildings;//Хранит список вью моделей.
 
         public BuildingsService(
             IObservableCollection<BuildingEntityProxy> buildings,//прилитает список состояний.

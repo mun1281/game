@@ -1,4 +1,5 @@
 ﻿using Assets.game.Scripts.Game.Settings.Gameplay.Buildings;
+using Assets.game.Scripts.Game.Settings.Gameplay.Maps;
 using UnityEngine;
 
 namespace Assets.game.Scripts.Game.Settings
@@ -7,5 +8,6 @@ namespace Assets.game.Scripts.Game.Settings
     public class GameSettings : ScriptableObject
     {
         public BuildingsSettings BuildingsSettings;
+        public MapsSettings MapsSettings;
     }
 }

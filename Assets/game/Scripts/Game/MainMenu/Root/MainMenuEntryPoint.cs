@@ -33,9 +33,7 @@ namespace Assets.game.Scripts.Game.MainMenu.Root
 
             Debug.Log($"Results: {enterParams?.Result}");
 
-            var saveFileName = "ololo.save";
-            var levelNumber = UnityEngine.Random.Range(0, 300);
-            var gameplayEnterParams = new GameplayEnterParams(saveFileName, levelNumber);
+            var gameplayEnterParams = new GameplayEnterParams(0);
             var mainMenuExitParams = new MainMenuExitParams(gameplayEnterParams);
             var exitToGameplaySceneSignal = exitSignalSubj.Select(_ => mainMenuExitParams);
 

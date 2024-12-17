@@ -64,7 +64,7 @@ namespace game.Scripts
 
             if (sceneName == Scenes.GAMEPLAY)
             {
-                var enterParams = new GameplayEnterParams("ddd.save", 1);
+                var enterParams = new GameplayEnterParams(0);
                 _coroutines.StartCoroutine(LoadAndStartGameplay(enterParams));
                 return;
             }
